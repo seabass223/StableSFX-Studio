@@ -1,0 +1,14 @@
+{
+  "protocolVersion": 4,
+  "name": "stablesfx-studio",
+  "displayName": "StableSFX Studio",
+  "type": "electron",
+  "targets": ["windows"],
+  "pin": {
+    "enabled": true,
+    "icon": "build/icon.ico"
+  },
+  "hooks": {
+    "preBuild": ["node scripts/copy-uv.mjs"]
+  }
+}

@@ -1,0 +1,13 @@
+node_modules/
+out/
+dist/
+*.log
+.DS_Store
+resources/uv.exe
+engine/.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+test-results/
+playwright-report/
+*.tsbuildinfo

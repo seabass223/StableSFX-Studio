@@ -1,0 +1,3459 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "StableSFX Engine",
+    "version": "1"
+  },
+  "paths": {
+    "/status": {
+      "get": {
+        "summary": "Status",
+        "operationId": "status_status_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EngineStatus"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/config": {
+      "get": {
+        "summary": "Get Config",
+        "operationId": "get_config_config_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EngineConfig"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Patch Config",
+        "operationId": "patch_config_config_patch",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": true,
+                "type": "object",
+                "title": "Patch"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EngineConfig"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/logs": {
+      "get": {
+        "summary": "Logs",
+        "operationId": "logs_logs_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array",
+                  "title": "Response Logs Logs Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/shutdown": {
+      "post": {
+        "summary": "Shutdown",
+        "operationId": "shutdown_shutdown_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": "boolean"
+                  },
+                  "type": "object",
+                  "title": "Response Shutdown Shutdown Post"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/models": {
+      "get": {
+        "summary": "Models",
+        "operationId": "models_models_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ModelInfo"
+                  },
+                  "type": "array",
+                  "title": "Response Models Models Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/models/{model}/download": {
+      "post": {
+        "summary": "Download",
+        "operationId": "download_models__model__download_post",
+        "parameters": [
+          {
+            "name": "model",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Model"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "boolean"
+                  },
+                  "title": "Response Download Models  Model  Download Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/models/{model}/cache": {
+      "delete": {
+        "summary": "Delete Model Cache",
+        "operationId": "delete_model_cache_models__model__cache_delete",
+        "parameters": [
+          {
+            "name": "model",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Model"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "integer"
+                  },
+                  "title": "Response Delete Model Cache Models  Model  Cache Delete"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/models/unload": {
+      "post": {
+        "summary": "Unload",
+        "operationId": "unload_models_unload_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": "boolean"
+                  },
+                  "type": "object",
+                  "title": "Response Unload Models Unload Post"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jobs": {
+      "post": {
+        "summary": "Submit",
+        "operationId": "submit_jobs_post",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/JobRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobInfo"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Jobs",
+        "operationId": "jobs_jobs_get",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 30,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/JobInfo"
+                  },
+                  "title": "Response Jobs Jobs Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jobs/{job_id}": {
+      "get": {
+        "summary": "Job",
+        "operationId": "job_jobs__job_id__get",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobInfo"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jobs/{job_id}/wait": {
+      "get": {
+        "summary": "Wait",
+        "operationId": "wait_jobs__job_id__wait_get",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          },
+          {
+            "name": "timeout",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "maximum": 600,
+              "default": 60,
+              "title": "Timeout"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobInfo"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jobs/{job_id}/cancel": {
+      "post": {
+        "summary": "Cancel",
+        "operationId": "cancel_jobs__job_id__cancel_post",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobInfo"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/library/tree": {
+      "get": {
+        "summary": "Tree",
+        "operationId": "tree_library_tree_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FolderNode"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/library/items": {
+      "get": {
+        "summary": "Library Items",
+        "operationId": "library_items_library_items_get",
+        "parameters": [
+          {
+            "name": "folder",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Folder"
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Q"
+            }
+          },
+          {
+            "name": "tags",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Tags"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "modified",
+              "title": "Sort"
+            }
+          },
+          {
+            "name": "recursive",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": true,
+              "title": "Recursive"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SfxItem"
+                  },
+                  "title": "Response Library Items Library Items Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/history/items": {
+      "get": {
+        "summary": "History Items",
+        "operationId": "history_items_history_items_get",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Q"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": 300,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SfxItem"
+                  },
+                  "title": "Response History Items History Items Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/history/prune": {
+      "post": {
+        "summary": "Prune",
+        "operationId": "prune_history_prune_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": "integer"
+                  },
+                  "type": "object",
+                  "title": "Response Prune History Prune Post"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/resolve": {
+      "get": {
+        "summary": "Resolve",
+        "description": "Any reference (item id, library-relative path, absolute path) -> item.",
+        "operationId": "resolve_resolve_get",
+        "parameters": [
+          {
+            "name": "ref",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Ref"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SfxItem"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/items/{item_id}": {
+      "get": {
+        "summary": "Item",
+        "operationId": "item_items__item_id__get",
+        "parameters": [
+          {
+            "name": "item_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Item Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SfxItem"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Patch Item",
+        "operationId": "patch_item_items__item_id__patch",
+        "parameters": [
+          {
+            "name": "item_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Item Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ItemPatch"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SfxItem"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete Item",
+        "operationId": "delete_item_items__item_id__delete",
+        "parameters": [
+          {
+            "name": "item_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Item Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "boolean"
+                  },
+                  "title": "Response Delete Item Items  Item Id  Delete"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/library/keep": {
+      "post": {
+        "summary": "Keep",
+        "operationId": "keep_library_keep_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/KeepRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SfxItem"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/library/import": {
+      "post": {
+        "summary": "Import Files",
+        "operationId": "import_files_library_import_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ImportRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/SfxItem"
+                  },
+                  "type": "array",
+                  "title": "Response Import Files Library Import Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/library/folders": {
+      "post": {
+        "summary": "Create Folder",
+        "operationId": "create_folder_library_folders_post",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FolderRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "title": "Response Create Folder Library Folders Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Rename Folder",
+        "operationId": "rename_folder_library_folders_patch",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FolderRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "title": "Response Rename Folder Library Folders Patch"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete Folder",
+        "operationId": "delete_folder_library_folders_delete",
+        "parameters": [
+          {
+            "name": "path",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Path"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "boolean"
+                  },
+                  "title": "Response Delete Folder Library Folders Delete"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/audio/{item_id}": {
+      "get": {
+        "summary": "Audio",
+        "operationId": "audio_audio__item_id__get",
+        "parameters": [
+          {
+            "name": "item_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Item Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/process": {
+      "post": {
+        "summary": "Process",
+        "operationId": "process_process_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProcessRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SfxItem"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/export": {
+      "post": {
+        "summary": "Export",
+        "operationId": "export_export_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExportRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExportResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/presets": {
+      "get": {
+        "summary": "Presets",
+        "operationId": "presets_presets_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/Preset"
+                  },
+                  "type": "array",
+                  "title": "Response Presets Presets Get"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Save Preset",
+        "operationId": "save_preset_presets_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Preset"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Preset"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/presets/{preset_id}": {
+      "delete": {
+        "summary": "Delete Preset",
+        "operationId": "delete_preset_presets__preset_id__delete",
+        "parameters": [
+          {
+            "name": "preset_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Preset Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "boolean"
+                  },
+                  "title": "Response Delete Preset Presets  Preset Id  Delete"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AudioStats": {
+        "properties": {
+          "duration": {
+            "type": "number",
+            "title": "Duration"
+          },
+          "sample_rate": {
+            "type": "integer",
+            "title": "Sample Rate"
+          },
+          "channels": {
+            "type": "integer",
+            "title": "Channels"
+          },
+          "frames": {
+            "type": "integer",
+            "title": "Frames"
+          },
+          "peak_db": {
+            "type": "number",
+            "title": "Peak Db"
+          },
+          "rms_db": {
+            "type": "number",
+            "title": "Rms Db"
+          },
+          "lufs": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lufs"
+          },
+          "head_silence": {
+            "type": "number",
+            "title": "Head Silence",
+            "default": 0.0
+          },
+          "tail_silence": {
+            "type": "number",
+            "title": "Tail Silence",
+            "default": 0.0
+          }
+        },
+        "type": "object",
+        "required": [
+          "duration",
+          "sample_rate",
+          "channels",
+          "frames",
+          "peak_db",
+          "rms_db"
+        ],
+        "title": "AudioStats"
+      },
+      "ChannelsOp": {
+        "properties": {
+          "op": {
+            "type": "string",
+            "enum": [
+              "mono",
+              "stereo"
+            ],
+            "title": "Op"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "op"
+        ],
+        "title": "ChannelsOp"
+      },
+      "EngineConfig": {
+        "properties": {
+          "library_path": {
+            "type": "string",
+            "title": "Library Path",
+            "default": ""
+          },
+          "default_model": {
+            "type": "string",
+            "enum": [
+              "small-sfx",
+              "small-sfx-base",
+              "small-music",
+              "small-music-base",
+              "medium",
+              "medium-base"
+            ],
+            "title": "Default Model",
+            "default": "small-sfx"
+          },
+          "device": {
+            "type": "string",
+            "enum": [
+              "auto",
+              "cuda",
+              "cpu"
+            ],
+            "title": "Device",
+            "default": "auto"
+          },
+          "precision": {
+            "type": "string",
+            "enum": [
+              "auto",
+              "fp32",
+              "bf16",
+              "fp16"
+            ],
+            "title": "Precision",
+            "description": "auto = fp32 for small models, bf16 for Medium (fp16 can overflow to NaN)",
+            "default": "auto"
+          },
+          "model_idle_unload_minutes": {
+            "type": "number",
+            "title": "Model Idle Unload Minutes",
+            "default": 10
+          },
+          "engine_idle_exit_minutes": {
+            "type": "number",
+            "title": "Engine Idle Exit Minutes",
+            "default": 30
+          },
+          "history_retention_days": {
+            "type": "number",
+            "title": "History Retention Days",
+            "default": 14
+          },
+          "history_max_gb": {
+            "type": "number",
+            "title": "History Max Gb",
+            "default": 2.0
+          },
+          "output": {
+            "$ref": "#/components/schemas/OutputDefaults",
+            "default": {
+              "format": "wav",
+              "sample_rate": 44100,
+              "bit_depth": 24,
+              "channels": 2,
+              "mp3_bitrate": 320
+            }
+          }
+        },
+        "type": "object",
+        "title": "EngineConfig"
+      },
+      "EngineStatus": {
+        "properties": {
+          "version": {
+            "type": "string",
+            "title": "Version"
+          },
+          "src_hash": {
+            "type": "string",
+            "title": "Src Hash"
+          },
+          "pid": {
+            "type": "integer",
+            "title": "Pid"
+          },
+          "ready": {
+            "type": "boolean",
+            "title": "Ready"
+          },
+          "device": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Device"
+          },
+          "device_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Device Name"
+          },
+          "vram_total_gb": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Vram Total Gb"
+          },
+          "vram_used_gb": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Vram Used Gb"
+          },
+          "torch": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Torch"
+          },
+          "cuda": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cuda"
+          },
+          "flash_attn": {
+            "type": "boolean",
+            "title": "Flash Attn",
+            "default": false
+          },
+          "loaded_model": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Loaded Model"
+          },
+          "loaded_precision": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Loaded Precision"
+          },
+          "busy": {
+            "type": "boolean",
+            "title": "Busy",
+            "default": false
+          },
+          "queue": {
+            "type": "integer",
+            "title": "Queue",
+            "default": 0
+          },
+          "clients": {
+            "type": "integer",
+            "title": "Clients",
+            "default": 0
+          },
+          "library_path": {
+            "type": "string",
+            "title": "Library Path"
+          },
+          "history_path": {
+            "type": "string",
+            "title": "History Path"
+          },
+          "fake": {
+            "type": "boolean",
+            "title": "Fake",
+            "default": false
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": [
+          "version",
+          "src_hash",
+          "pid",
+          "ready",
+          "library_path",
+          "history_path"
+        ],
+        "title": "EngineStatus"
+      },
+      "ExportRequest": {
+        "properties": {
+          "sources": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Sources"
+          },
+          "dest_dir": {
+            "type": "string",
+            "title": "Dest Dir"
+          },
+          "format": {
+            "type": "string",
+            "enum": [
+              "wav",
+              "flac",
+              "mp3"
+            ],
+            "title": "Format",
+            "default": "wav"
+          },
+          "sample_rate": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sample Rate",
+            "description": "None = keep source rate"
+          },
+          "bit_depth": {
+            "type": "integer",
+            "enum": [
+              16,
+              24,
+              32
+            ],
+            "title": "Bit Depth",
+            "default": 24
+          },
+          "channels": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "enum": [
+                  1,
+                  2
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Channels"
+          },
+          "mp3_bitrate": {
+            "type": "integer",
+            "maximum": 320.0,
+            "minimum": 64.0,
+            "title": "Mp3 Bitrate",
+            "default": 320
+          },
+          "normalize": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/NormalizeOp"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "name_template": {
+            "type": "string",
+            "title": "Name Template",
+            "description": "Tokens: {name} {index} {seed} {folder}",
+            "default": "{name}"
+          },
+          "overwrite": {
+            "type": "boolean",
+            "title": "Overwrite",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "sources",
+          "dest_dir"
+        ],
+        "title": "ExportRequest"
+      },
+      "ExportResult": {
+        "properties": {
+          "files": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Files"
+          },
+          "warnings": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Warnings",
+            "default": []
+          }
+        },
+        "type": "object",
+        "required": [
+          "files"
+        ],
+        "title": "ExportResult"
+      },
+      "FadeOp": {
+        "properties": {
+          "op": {
+            "type": "string",
+            "enum": [
+              "fade_in",
+              "fade_out"
+            ],
+            "title": "Op"
+          },
+          "ms": {
+            "type": "number",
+            "title": "Ms",
+            "default": 50.0
+          },
+          "curve": {
+            "type": "string",
+            "enum": [
+              "linear",
+              "exp",
+              "log",
+              "scurve"
+            ],
+            "title": "Curve",
+            "default": "linear"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "op"
+        ],
+        "title": "FadeOp"
+      },
+      "FilterOp": {
+        "properties": {
+          "op": {
+            "type": "string",
+            "enum": [
+              "highpass",
+              "lowpass"
+            ],
+            "title": "Op"
+          },
+          "freq_hz": {
+            "type": "number",
+            "title": "Freq Hz",
+            "default": 100.0
+          },
+          "q": {
+            "type": "number",
+            "title": "Q",
+            "default": 0.707
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "op"
+        ],
+        "title": "FilterOp"
+      },
+      "FolderNode": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "path": {
+            "type": "string",
+            "title": "Path"
+          },
+          "count": {
+            "type": "integer",
+            "title": "Count"
+          },
+          "children": {
+            "items": {
+              "$ref": "#/components/schemas/FolderNode"
+            },
+            "type": "array",
+            "title": "Children",
+            "default": []
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "path",
+          "count"
+        ],
+        "title": "FolderNode"
+      },
+      "FolderRequest": {
+        "properties": {
+          "path": {
+            "type": "string",
+            "title": "Path"
+          },
+          "new_path": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "New Path"
+          }
+        },
+        "type": "object",
+        "required": [
+          "path"
+        ],
+        "title": "FolderRequest"
+      },
+      "GainOp": {
+        "properties": {
+          "op": {
+            "type": "string",
+            "const": "gain",
+            "title": "Op",
+            "default": "gain"
+          },
+          "db": {
+            "type": "number",
+            "title": "Db",
+            "default": 0.0
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "GainOp"
+      },
+      "GenerateParams": {
+        "properties": {
+          "model": {
+            "type": "string",
+            "enum": [
+              "small-sfx",
+              "small-sfx-base",
+              "small-music",
+              "small-music-base",
+              "medium",
+              "medium-base"
+            ],
+            "title": "Model",
+            "default": "small-sfx"
+          },
+          "prompt": {
+            "type": "string",
+            "title": "Prompt",
+            "default": ""
+          },
+          "negative_prompt": {
+            "type": "string",
+            "title": "Negative Prompt",
+            "default": ""
+          },
+          "sfx_prefix": {
+            "type": "boolean",
+            "title": "Sfx Prefix",
+            "description": "Prepend 'TrackType: SFX, ' (upstream prompting guide)",
+            "default": true
+          },
+          "duration": {
+            "type": "number",
+            "maximum": 384.0,
+            "exclusiveMinimum": 0.0,
+            "title": "Duration",
+            "default": 3.0
+          },
+          "seed": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": -1.0,
+            "title": "Seed",
+            "description": "-1 = random",
+            "default": -1
+          },
+          "steps": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 500.0,
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Steps"
+          },
+          "cfg_scale": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 25.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cfg Scale"
+          },
+          "apg_scale": {
+            "type": "number",
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Apg Scale",
+            "default": 1.0
+          },
+          "cfg_interval": {
+            "prefixItems": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "type": "array",
+            "maxItems": 2,
+            "minItems": 2,
+            "title": "Cfg Interval",
+            "default": [
+              0.0,
+              1.0
+            ]
+          },
+          "cfg_rescale": {
+            "type": "number",
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Cfg Rescale",
+            "default": 0.0
+          },
+          "cfg_norm_threshold": {
+            "type": "number",
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "title": "Cfg Norm Threshold",
+            "default": 0.0
+          },
+          "sampler": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "pingpong",
+                  "euler",
+                  "dpmpp",
+                  "rk4"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sampler"
+          },
+          "duration_padding": {
+            "type": "number",
+            "maximum": 30.0,
+            "minimum": 0.0,
+            "title": "Duration Padding",
+            "default": 6.0
+          },
+          "chunked_decode": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Chunked Decode"
+          },
+          "shift": {
+            "$ref": "#/components/schemas/ShiftParams",
+            "default": {
+              "type": "default",
+              "anchor_length": 2000,
+              "anchor_logsnr": -6.2,
+              "rate": 0.0,
+              "logsnr_end": 2.0,
+              "min_length": 256,
+              "max_length": 4096,
+              "alpha_min": 6.93,
+              "alpha_max": 6.93,
+              "base_shift": 0.5,
+              "max_shift": 1.15
+            }
+          },
+          "loras": {
+            "items": {
+              "$ref": "#/components/schemas/LoraSpec"
+            },
+            "type": "array",
+            "title": "Loras",
+            "default": []
+          }
+        },
+        "type": "object",
+        "title": "GenerateParams",
+        "description": "Every meaningful Stable Audio 3 sampling parameter. ``None`` = model default."
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "ImportRequest": {
+        "properties": {
+          "paths": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Paths"
+          },
+          "folder": {
+            "type": "string",
+            "title": "Folder",
+            "default": "Imported"
+          }
+        },
+        "type": "object",
+        "required": [
+          "paths"
+        ],
+        "title": "ImportRequest"
+      },
+      "ItemPatch": {
+        "properties": {
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "folder": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Folder"
+          },
+          "tags": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tags"
+          },
+          "starred": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Starred"
+          },
+          "prompt": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Prompt"
+          }
+        },
+        "type": "object",
+        "title": "ItemPatch"
+      },
+      "JobInfo": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "text",
+              "audio2audio",
+              "inpaint",
+              "extend",
+              "loop"
+            ],
+            "title": "Mode"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "queued",
+              "loading",
+              "encoding",
+              "sampling",
+              "decoding",
+              "saving",
+              "done",
+              "error",
+              "cancelled"
+            ],
+            "title": "State"
+          },
+          "origin": {
+            "type": "string",
+            "title": "Origin"
+          },
+          "created": {
+            "type": "number",
+            "title": "Created"
+          },
+          "started": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Started"
+          },
+          "finished": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Finished"
+          },
+          "variation": {
+            "type": "integer",
+            "title": "Variation",
+            "default": 0
+          },
+          "variations": {
+            "type": "integer",
+            "title": "Variations",
+            "default": 1
+          },
+          "step": {
+            "type": "integer",
+            "title": "Step",
+            "default": 0
+          },
+          "steps": {
+            "type": "integer",
+            "title": "Steps",
+            "default": 0
+          },
+          "progress": {
+            "type": "number",
+            "title": "Progress",
+            "default": 0.0
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error"
+          },
+          "results": {
+            "items": {
+              "$ref": "#/components/schemas/SfxItem"
+            },
+            "type": "array",
+            "title": "Results",
+            "default": []
+          },
+          "seeds": {
+            "items": {
+              "type": "integer"
+            },
+            "type": "array",
+            "title": "Seeds",
+            "default": []
+          },
+          "request": {
+            "$ref": "#/components/schemas/JobRequest"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "mode",
+          "state",
+          "origin",
+          "created",
+          "request"
+        ],
+        "title": "JobInfo"
+      },
+      "JobRequest": {
+        "properties": {
+          "mode": {
+            "type": "string",
+            "enum": [
+              "text",
+              "audio2audio",
+              "inpaint",
+              "extend",
+              "loop"
+            ],
+            "title": "Mode",
+            "default": "text"
+          },
+          "params": {
+            "$ref": "#/components/schemas/GenerateParams",
+            "default": {
+              "model": "small-sfx",
+              "prompt": "",
+              "negative_prompt": "",
+              "sfx_prefix": true,
+              "duration": 3.0,
+              "seed": -1,
+              "apg_scale": 1.0,
+              "cfg_interval": [
+                0.0,
+                1.0
+              ],
+              "cfg_rescale": 0.0,
+              "cfg_norm_threshold": 0.0,
+              "duration_padding": 6.0,
+              "shift": {
+                "alpha_max": 6.93,
+                "alpha_min": 6.93,
+                "anchor_length": 2000,
+                "anchor_logsnr": -6.2,
+                "base_shift": 0.5,
+                "logsnr_end": 2.0,
+                "max_length": 4096,
+                "max_shift": 1.15,
+                "min_length": 256,
+                "rate": 0.0,
+                "type": "default"
+              },
+              "loras": []
+            }
+          },
+          "variations": {
+            "type": "integer",
+            "maximum": 16.0,
+            "minimum": 1.0,
+            "title": "Variations",
+            "default": 1
+          },
+          "source": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source",
+            "description": "Item id (lib:/hist:) or absolute audio path"
+          },
+          "strength": {
+            "type": "number",
+            "maximum": 1.0,
+            "minimum": 0.01,
+            "title": "Strength",
+            "description": "audio2audio: how far from the source (init noise level). inpaint/extend/loop: <1 keeps the source's structure inside the region too",
+            "default": 0.5
+          },
+          "duration_from_source": {
+            "type": "boolean",
+            "title": "Duration From Source",
+            "description": "audio2audio: use the source length as duration",
+            "default": true
+          },
+          "regions": {
+            "items": {
+              "prefixItems": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                }
+              ],
+              "type": "array",
+              "maxItems": 2,
+              "minItems": 2
+            },
+            "type": "array",
+            "title": "Regions",
+            "description": "inpaint regions in seconds"
+          },
+          "preserve_outside": {
+            "type": "boolean",
+            "title": "Preserve Outside",
+            "description": "inpaint/extend/loop: composite the untouched source back outside the regions",
+            "default": true
+          },
+          "extend_seconds": {
+            "type": "number",
+            "maximum": 380.0,
+            "exclusiveMinimum": 0.0,
+            "title": "Extend Seconds",
+            "default": 2.0
+          },
+          "loop_seam_seconds": {
+            "type": "number",
+            "maximum": 10.0,
+            "minimum": 0.1,
+            "title": "Loop Seam Seconds",
+            "default": 0.75
+          },
+          "target": {
+            "type": "string",
+            "enum": [
+              "history",
+              "library"
+            ],
+            "title": "Target",
+            "default": "history"
+          },
+          "folder": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Folder",
+            "description": "Library folder (relative) when target=library"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "tags": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Tags",
+            "default": []
+          },
+          "post": {
+            "items": {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/TrimOp"
+                },
+                {
+                  "$ref": "#/components/schemas/TrimSilenceOp"
+                },
+                {
+                  "$ref": "#/components/schemas/NormalizeOp"
+                },
+                {
+                  "$ref": "#/components/schemas/FadeOp"
+                },
+                {
+                  "$ref": "#/components/schemas/ReverseOp"
+                },
+                {
+                  "$ref": "#/components/schemas/GainOp"
+                },
+                {
+                  "$ref": "#/components/schemas/LoopCrossfadeOp"
+                },
+                {
+                  "$ref": "#/components/schemas/PitchOp"
+                },
+                {
+                  "$ref": "#/components/schemas/StretchOp"
+                },
+                {
+                  "$ref": "#/components/schemas/ChannelsOp"
+                },
+                {
+                  "$ref": "#/components/schemas/ResampleOp"
+                },
+                {
+                  "$ref": "#/components/schemas/FilterOp"
+                },
+                {
+                  "$ref": "#/components/schemas/PadOp"
+                }
+              ],
+              "discriminator": {
+                "propertyName": "op",
+                "mapping": {
+                  "fade_in": "#/components/schemas/FadeOp",
+                  "fade_out": "#/components/schemas/FadeOp",
+                  "gain": "#/components/schemas/GainOp",
+                  "highpass": "#/components/schemas/FilterOp",
+                  "loop_crossfade": "#/components/schemas/LoopCrossfadeOp",
+                  "lowpass": "#/components/schemas/FilterOp",
+                  "mono": "#/components/schemas/ChannelsOp",
+                  "normalize": "#/components/schemas/NormalizeOp",
+                  "pad": "#/components/schemas/PadOp",
+                  "pitch": "#/components/schemas/PitchOp",
+                  "resample": "#/components/schemas/ResampleOp",
+                  "reverse": "#/components/schemas/ReverseOp",
+                  "stereo": "#/components/schemas/ChannelsOp",
+                  "stretch": "#/components/schemas/StretchOp",
+                  "trim": "#/components/schemas/TrimOp",
+                  "trim_silence": "#/components/schemas/TrimSilenceOp"
+                }
+              }
+            },
+            "type": "array",
+            "title": "Post",
+            "default": []
+          },
+          "origin": {
+            "type": "string",
+            "enum": [
+              "app",
+              "mcp",
+              "api"
+            ],
+            "title": "Origin",
+            "default": "app"
+          }
+        },
+        "type": "object",
+        "title": "JobRequest"
+      },
+      "KeepRequest": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "folder": {
+            "type": "string",
+            "title": "Folder",
+            "default": "Inbox"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "tags": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Tags",
+            "default": []
+          },
+          "move": {
+            "type": "boolean",
+            "title": "Move",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "title": "KeepRequest"
+      },
+      "LoopCrossfadeOp": {
+        "properties": {
+          "op": {
+            "type": "string",
+            "const": "loop_crossfade",
+            "title": "Op",
+            "default": "loop_crossfade"
+          },
+          "ms": {
+            "type": "number",
+            "title": "Ms",
+            "default": 250.0
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "LoopCrossfadeOp"
+      },
+      "LoraSpec": {
+        "properties": {
+          "path": {
+            "type": "string",
+            "title": "Path",
+            "description": "Absolute path to a .safetensors LoRA"
+          },
+          "strength": {
+            "type": "number",
+            "maximum": 10.0,
+            "minimum": 0.0,
+            "title": "Strength",
+            "default": 1.0
+          },
+          "interval": {
+            "prefixItems": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "type": "array",
+            "maxItems": 2,
+            "minItems": 2,
+            "title": "Interval",
+            "default": [
+              0.0,
+              1.0
+            ]
+          },
+          "layer_filter": {
+            "type": "string",
+            "title": "Layer Filter",
+            "default": ""
+          }
+        },
+        "type": "object",
+        "required": [
+          "path"
+        ],
+        "title": "LoraSpec"
+      },
+      "ModelDefaults": {
+        "properties": {
+          "steps": {
+            "type": "integer",
+            "title": "Steps"
+          },
+          "cfg_scale": {
+            "type": "number",
+            "title": "Cfg Scale"
+          },
+          "sampler": {
+            "type": "string",
+            "enum": [
+              "pingpong",
+              "euler",
+              "dpmpp",
+              "rk4"
+            ],
+            "title": "Sampler"
+          },
+          "max_duration": {
+            "type": "number",
+            "title": "Max Duration"
+          }
+        },
+        "type": "object",
+        "required": [
+          "steps",
+          "cfg_scale",
+          "sampler",
+          "max_duration"
+        ],
+        "title": "ModelDefaults"
+      },
+      "ModelInfo": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "enum": [
+              "small-sfx",
+              "small-sfx-base",
+              "small-music",
+              "small-music-base",
+              "medium",
+              "medium-base"
+            ],
+            "title": "Id"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "sfx",
+              "music",
+              "general"
+            ],
+            "title": "Kind"
+          },
+          "distilled": {
+            "type": "boolean",
+            "title": "Distilled"
+          },
+          "repo_id": {
+            "type": "string",
+            "title": "Repo Id"
+          },
+          "license_url": {
+            "type": "string",
+            "title": "License Url"
+          },
+          "defaults": {
+            "$ref": "#/components/schemas/ModelDefaults"
+          },
+          "downloaded": {
+            "type": "boolean",
+            "title": "Downloaded",
+            "default": false
+          },
+          "size_bytes": {
+            "type": "integer",
+            "title": "Size Bytes",
+            "default": 0
+          },
+          "loaded": {
+            "type": "boolean",
+            "title": "Loaded",
+            "default": false
+          },
+          "available": {
+            "type": "boolean",
+            "title": "Available",
+            "default": true
+          },
+          "note": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Note"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "label",
+          "kind",
+          "distilled",
+          "repo_id",
+          "license_url",
+          "defaults"
+        ],
+        "title": "ModelInfo"
+      },
+      "NormalizeOp": {
+        "properties": {
+          "op": {
+            "type": "string",
+            "const": "normalize",
+            "title": "Op",
+            "default": "normalize"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "peak",
+              "lufs"
+            ],
+            "title": "Mode",
+            "default": "peak"
+          },
+          "target": {
+            "type": "number",
+            "title": "Target",
+            "default": -1.0
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "NormalizeOp"
+      },
+      "OutputDefaults": {
+        "properties": {
+          "format": {
+            "type": "string",
+            "enum": [
+              "wav",
+              "flac",
+              "mp3"
+            ],
+            "title": "Format",
+            "default": "wav"
+          },
+          "sample_rate": {
+            "type": "integer",
+            "title": "Sample Rate",
+            "default": 44100
+          },
+          "bit_depth": {
+            "type": "integer",
+            "enum": [
+              16,
+              24,
+              32
+            ],
+            "title": "Bit Depth",
+            "default": 24
+          },
+          "channels": {
+            "type": "integer",
+            "enum": [
+              1,
+              2
+            ],
+            "title": "Channels",
+            "default": 2
+          },
+          "mp3_bitrate": {
+            "type": "integer",
+            "title": "Mp3 Bitrate",
+            "default": 320
+          }
+        },
+        "type": "object",
+        "title": "OutputDefaults"
+      },
+      "PadOp": {
+        "properties": {
+          "op": {
+            "type": "string",
+            "const": "pad",
+            "title": "Op",
+            "default": "pad"
+          },
+          "head_ms": {
+            "type": "number",
+            "title": "Head Ms",
+            "default": 0.0
+          },
+          "tail_ms": {
+            "type": "number",
+            "title": "Tail Ms",
+            "default": 0.0
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "PadOp"
+      },
+      "PitchOp": {
+        "properties": {
+          "op": {
+            "type": "string",
+            "const": "pitch",
+            "title": "Op",
+            "default": "pitch"
+          },
+          "semitones": {
+            "type": "number",
+            "title": "Semitones",
+            "default": 0.0
+          },
+          "preserve_length": {
+            "type": "boolean",
+            "title": "Preserve Length",
+            "default": false
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "PitchOp"
+      },
+      "Preset": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "category": {
+            "type": "string",
+            "title": "Category"
+          },
+          "builtin": {
+            "type": "boolean",
+            "title": "Builtin",
+            "default": false
+          },
+          "description": {
+            "type": "string",
+            "title": "Description",
+            "default": ""
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "text",
+              "audio2audio",
+              "inpaint",
+              "extend",
+              "loop"
+            ],
+            "title": "Mode",
+            "default": "text"
+          },
+          "params": {
+            "$ref": "#/components/schemas/GenerateParams"
+          },
+          "variations": {
+            "type": "integer",
+            "title": "Variations",
+            "default": 4
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "category",
+          "params"
+        ],
+        "title": "Preset"
+      },
+      "ProcessRequest": {
+        "properties": {
+          "source": {
+            "type": "string",
+            "title": "Source"
+          },
+          "ops": {
+            "items": {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/TrimOp"
+                },
+                {
+                  "$ref": "#/components/schemas/TrimSilenceOp"
+                },
+                {
+                  "$ref": "#/components/schemas/NormalizeOp"
+                },
+                {
+                  "$ref": "#/components/schemas/FadeOp"
+                },
+                {
+                  "$ref": "#/components/schemas/ReverseOp"
+                },
+                {
+                  "$ref": "#/components/schemas/GainOp"
+                },
+                {
+                  "$ref": "#/components/schemas/LoopCrossfadeOp"
+                },
+                {
+                  "$ref": "#/components/schemas/PitchOp"
+                },
+                {
+                  "$ref": "#/components/schemas/StretchOp"
+                },
+                {
+                  "$ref": "#/components/schemas/ChannelsOp"
+                },
+                {
+                  "$ref": "#/components/schemas/ResampleOp"
+                },
+                {
+                  "$ref": "#/components/schemas/FilterOp"
+                },
+                {
+                  "$ref": "#/components/schemas/PadOp"
+                }
+              ],
+              "discriminator": {
+                "propertyName": "op",
+                "mapping": {
+                  "fade_in": "#/components/schemas/FadeOp",
+                  "fade_out": "#/components/schemas/FadeOp",
+                  "gain": "#/components/schemas/GainOp",
+                  "highpass": "#/components/schemas/FilterOp",
+                  "loop_crossfade": "#/components/schemas/LoopCrossfadeOp",
+                  "lowpass": "#/components/schemas/FilterOp",
+                  "mono": "#/components/schemas/ChannelsOp",
+                  "normalize": "#/components/schemas/NormalizeOp",
+                  "pad": "#/components/schemas/PadOp",
+                  "pitch": "#/components/schemas/PitchOp",
+                  "resample": "#/components/schemas/ResampleOp",
+                  "reverse": "#/components/schemas/ReverseOp",
+                  "stereo": "#/components/schemas/ChannelsOp",
+                  "stretch": "#/components/schemas/StretchOp",
+                  "trim": "#/components/schemas/TrimOp",
+                  "trim_silence": "#/components/schemas/TrimSilenceOp"
+                }
+              }
+            },
+            "type": "array",
+            "title": "Ops"
+          },
+          "target": {
+            "type": "string",
+            "enum": [
+              "history",
+              "replace",
+              "library"
+            ],
+            "title": "Target",
+            "default": "history"
+          },
+          "folder": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Folder"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          }
+        },
+        "type": "object",
+        "required": [
+          "source",
+          "ops"
+        ],
+        "title": "ProcessRequest"
+      },
+      "ResampleOp": {
+        "properties": {
+          "op": {
+            "type": "string",
+            "const": "resample",
+            "title": "Op",
+            "default": "resample"
+          },
+          "sample_rate": {
+            "type": "integer",
+            "title": "Sample Rate",
+            "default": 44100
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "ResampleOp"
+      },
+      "ReverseOp": {
+        "properties": {
+          "op": {
+            "type": "string",
+            "const": "reverse",
+            "title": "Op",
+            "default": "reverse"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "ReverseOp"
+      },
+      "SfxItem": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id",
+            "description": "lib:<relative path> or hist:<relative path>"
+          },
+          "uid": {
+            "type": "string",
+            "title": "Uid"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "library",
+              "history",
+              "external"
+            ],
+            "title": "Kind"
+          },
+          "path": {
+            "type": "string",
+            "title": "Path"
+          },
+          "folder": {
+            "type": "string",
+            "title": "Folder"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "ext": {
+            "type": "string",
+            "title": "Ext"
+          },
+          "size": {
+            "type": "integer",
+            "title": "Size"
+          },
+          "created": {
+            "type": "string",
+            "title": "Created"
+          },
+          "modified": {
+            "type": "number",
+            "title": "Modified"
+          },
+          "prompt": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Prompt"
+          },
+          "model": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Model"
+          },
+          "mode": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Mode"
+          },
+          "seed": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Seed"
+          },
+          "params": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Params"
+          },
+          "source_uid": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Uid"
+          },
+          "parent_uid": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Parent Uid"
+          },
+          "ops": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Ops",
+            "default": []
+          },
+          "tags": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Tags",
+            "default": []
+          },
+          "starred": {
+            "type": "boolean",
+            "title": "Starred",
+            "default": false
+          },
+          "origin": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Origin"
+          },
+          "generation_time": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Generation Time"
+          },
+          "stats": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AudioStats"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "peaks": {
+            "items": {
+              "type": "number"
+            },
+            "type": "array",
+            "title": "Peaks",
+            "default": []
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "uid",
+          "kind",
+          "path",
+          "folder",
+          "name",
+          "ext",
+          "size",
+          "created",
+          "modified"
+        ],
+        "title": "SfxItem"
+      },
+      "ShiftParams": {
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "default",
+              "logsnr",
+              "flux",
+              "full",
+              "none"
+            ],
+            "title": "Type",
+            "default": "default"
+          },
+          "anchor_length": {
+            "type": "integer",
+            "maximum": 10000.0,
+            "minimum": 100.0,
+            "title": "Anchor Length",
+            "default": 2000
+          },
+          "anchor_logsnr": {
+            "type": "number",
+            "maximum": 0.0,
+            "minimum": -12.0,
+            "title": "Anchor Logsnr",
+            "default": -6.2
+          },
+          "rate": {
+            "type": "number",
+            "maximum": 2.0,
+            "minimum": -2.0,
+            "title": "Rate",
+            "default": 0.0
+          },
+          "logsnr_end": {
+            "type": "number",
+            "maximum": 6.0,
+            "minimum": -2.0,
+            "title": "Logsnr End",
+            "default": 2.0
+          },
+          "min_length": {
+            "type": "integer",
+            "maximum": 10000.0,
+            "minimum": 1.0,
+            "title": "Min Length",
+            "default": 256
+          },
+          "max_length": {
+            "type": "integer",
+            "maximum": 10000.0,
+            "minimum": 1.0,
+            "title": "Max Length",
+            "default": 4096
+          },
+          "alpha_min": {
+            "type": "number",
+            "maximum": 20.0,
+            "minimum": 0.1,
+            "title": "Alpha Min",
+            "default": 6.93
+          },
+          "alpha_max": {
+            "type": "number",
+            "maximum": 20.0,
+            "minimum": 0.1,
+            "title": "Alpha Max",
+            "default": 6.93
+          },
+          "base_shift": {
+            "type": "number",
+            "maximum": 5.0,
+            "minimum": 0.0,
+            "title": "Base Shift",
+            "default": 0.5
+          },
+          "max_shift": {
+            "type": "number",
+            "maximum": 5.0,
+            "minimum": 0.0,
+            "title": "Max Shift",
+            "default": 1.15
+          }
+        },
+        "type": "object",
+        "title": "ShiftParams",
+        "description": "Inference-time timestep schedule shift. ``default`` uses the model's own."
+      },
+      "StretchOp": {
+        "properties": {
+          "op": {
+            "type": "string",
+            "const": "stretch",
+            "title": "Op",
+            "default": "stretch"
+          },
+          "factor": {
+            "type": "number",
+            "maximum": 4.0,
+            "exclusiveMinimum": 0.25,
+            "title": "Factor",
+            "description": ">1 = longer/slower, pitch preserved",
+            "default": 1.0
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "StretchOp"
+      },
+      "TrimOp": {
+        "properties": {
+          "op": {
+            "type": "string",
+            "const": "trim",
+            "title": "Op",
+            "default": "trim"
+          },
+          "start": {
+            "type": "number",
+            "title": "Start",
+            "default": 0.0
+          },
+          "end": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "End"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "TrimOp"
+      },
+      "TrimSilenceOp": {
+        "properties": {
+          "op": {
+            "type": "string",
+            "const": "trim_silence",
+            "title": "Op",
+            "default": "trim_silence"
+          },
+          "threshold_db": {
+            "type": "number",
+            "title": "Threshold Db",
+            "default": -50.0
+          },
+          "pad_ms": {
+            "type": "number",
+            "title": "Pad Ms",
+            "default": 10.0
+          },
+          "head": {
+            "type": "boolean",
+            "title": "Head",
+            "default": true
+          },
+          "tail": {
+            "type": "boolean",
+            "title": "Tail",
+            "default": true
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "TrimSilenceOp"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}
